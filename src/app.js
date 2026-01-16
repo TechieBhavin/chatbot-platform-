@@ -5,6 +5,7 @@ require('dotenv').config();
 const connectDB = require('./config/db');
 const protect = require('./middlewares/authMiddleware');
 
+
 const app = express();
 
 // Connect DB
@@ -15,16 +16,18 @@ app.use(express.json());
 
 app.use('/api/auth', require('./routes/authRoutes'));
 
+app.use('/api/projects', require('./routes/projectRoutes'));
+
 app.get('/', (req, res) => {
   res.send('Chatbot Platform API running 🚀');
 });
 
-app.get('/api/protected', protect, (req, res) => {
-  res.json({
-    message: 'Protected route accessed',
-    user: req.user,
-  });
-});
+// app.get('/api/protected', protect, (req, res) => {
+//   res.json({
+//     message: 'Protected route accessed',
+//     user: req.user,
+//   });
+// });
 
 const PORT = process.env.PORT || 5007;
 app.listen(PORT, () => {
